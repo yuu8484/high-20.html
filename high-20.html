@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音読練習</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 30px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .sentence {
+      font-size: 22px;
+      margin: 20px 0;
+    }
+    .translation {
+      font-size: 18px;
+      margin: 10px 0;
+      color: #555;
+      display: none;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      .sentence {
+        font-size: 20px;
+      }
+      .translation {
+        font-size: 16px;
+      }
+      button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>音読練習</h1>
+    <div class="sentence" id="sentence">Loading...</div>
+    <div class="translation" id="translation"></div>
+    <button onclick="speakSentence()">🔊 再生</button>
+    <button onclick="toggleTranslation()">🈁 訳を表示</button>
+    <button onclick="nextQuestion()">⏭ 次へ</button>
+  </div>
+
+  <script>
+    const sentencesData = [
+      { sentence: "I like apples.", translation: "私はりんごが好きです。" },
+      { sentence: "She is reading a book.", translation: "彼女は本を読んでいます。" },
+      { sentence: "He goes to school by bus.", translation: "彼はバスで学校へ行きます。" },
+      { sentence: "We are playing soccer.", translation: "私たちはサッカーをしています。" },
+      { sentence: "Do you like music?", translation: "あなたは音楽が好きですか？" },
+      { sentence: "This is my favorite movie.", translation: "これは私のお気に入りの映画です。" },
+      { sentence: "They live in Tokyo.", translation: "彼らは東京に住んでいます。" },
+      { sentence: "She has a cute dog.", translation: "彼女はかわいい犬を飼っています。" },
+      { sentence: "I want to be a teacher.", translation: "私は先生になりたいです。" },
+      { sentence: "Let's go shopping.", translation: "買い物に行きましょう。" },
+      { sentence: "He is a good student.", translation: "彼は良い生徒です。" },
+      { sentence: "We are from Japan.", translation: "私たちは日本出身です。" },
+      { sentence: "Can you help me?", translation: "手伝ってくれますか？" },
+      { sentence: "I get up at six.", translation: "私は6時に起きます。" },
+      { sentence: "She likes dancing.", translation: "彼女はダンスが好きです。" },
+      { sentence: "It's a sunny day.", translation: "今日は晴れです。" },
+      { sentence: "I'm hungry.", translation: "お腹が空きました。" },
+      { sentence: "This book is interesting.", translation: "この本は面白いです。" },
+      { sentence: "Do you play the piano?", translation: "あなたはピアノを弾きますか？" },
+      { sentence: "My brother is tall.", translation: "私の兄は背が高いです。" }
+    ];
+
+    let currentIndex = 0;
+
+    function showQuestion(index) {
+      const sentenceObj = sentencesData[index];
+      document.getElementById("sentence").textContent = sentenceObj.sentence;
+      document.getElementById("translation").textContent = sentenceObj.translation;
+      document.getElementById("translation").style.display = "none";
+    }
+
+    function speakSentence() {
+      const sentence = sentencesData[currentIndex].sentence;
+      const utterance = new SpeechSynthesisUtterance(sentence);
+      utterance.lang = "en-US";
+      speechSynthesis.speak(utterance);
+    }
+
+    function toggleTranslation() {
+      const translationDiv = document.getElementById("translation");
+      if (translationDiv.style.display === "none") {
+        translationDiv.style.display = "block";
+      } else {
+        translationDiv.style.display = "none";
+      }
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex >= sentencesData.length) {
+        currentIndex = 0;
+      }
+      showQuestion(currentIndex);
+    }
+
+    // 初期表示
+    showQuestion(currentIndex);
+  </script>
+</body>
+</html>
+s
